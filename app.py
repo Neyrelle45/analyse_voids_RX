@@ -31,13 +31,16 @@ if "corr_mask" not in st.session_state:
 # ---------- ROI CANVAS ----------
 st.subheader("1️⃣ Définition des ROI (polygones)")
 
-st.image(img, clamp=True)
+
+img_pil = Image.open(uploaded).convert("RGB")
+img = np.array(img_pil)
+h, w = img.shape[:2]
 
 canvas = st_canvas(
-    fill_color="rgba(0,255,0,0.3)",
+    fill_color="rgba(0,255,0,0.35)",   # ROI vert translucide
     stroke_width=2,
-    stroke_color="rgba(0,255,0,0.9)",
-    background_color="rgba(0,0,0,0)",  # ✅ TRANSPARENT
+    stroke_color="rgba(0,255,0,1)",
+    background_image=img_pil,          # ✅ IMAGE RX DANS LE CANVAS
     height=h,
     width=w,
     drawing_mode="polygon",
@@ -46,7 +49,10 @@ canvas = st_canvas(
 )
 
 if canvas.json_data:
-    st.session_state.roi_mask = shapes_to_roi_mask(canvas.json_data, h, w)
+    st.session_state.roi_mask = shapes_to_roi_mask(
+        canvas.json_data, h, w
+    )
+
 
 # ---------- MANUAL EDIT ----------
 st.subheader("2️⃣ Corrections manuelles RX (clic)")
