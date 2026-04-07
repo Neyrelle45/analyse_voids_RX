@@ -31,16 +31,7 @@ if "corr_mask" not in st.session_state:
 # ---------- ROI CANVAS ----------
 st.subheader("1️⃣ Définition des ROI (polygones)")
 
-canvas = st_canvas(
-    fill_color="rgba(0,255,0,0.3)",
-    stroke_width=2,
-    stroke_color="rgba(0,255,0,0.9)",
-    background_image=Image.fromarray(img),
-    height=h,
-    width=w,
-    drawing_mode="polygon",
-    key="roi_canvas",
-)
+st.image(img, clamp=True)
 
 if canvas.json_data:
     st.session_state.roi_mask = shapes_to_roi_mask(canvas.json_data, h, w)
