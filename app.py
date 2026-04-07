@@ -33,6 +33,18 @@ st.subheader("1️⃣ Définition des ROI (polygones)")
 
 st.image(img, clamp=True)
 
+canvas = st_canvas(
+    fill_color="rgba(0,255,0,0.3)",
+    stroke_width=2,
+    stroke_color="rgba(0,255,0,0.9)",
+    background_color="rgba(0,0,0,0)",  # ✅ TRANSPARENT
+    height=h,
+    width=w,
+    drawing_mode="polygon",
+    update_streamlit=True,
+    key="roi_canvas",
+)
+
 if canvas.json_data:
     st.session_state.roi_mask = shapes_to_roi_mask(canvas.json_data, h, w)
 
